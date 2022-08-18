@@ -12,7 +12,15 @@ const CalendarTitle = styled.div`
 
 const TitleEl = styled.h2`
     font-weight: 500;
-    font-size: 30px;
+    font-size: 22px;
+    white-space: nowrap;
+
+    & > span {
+        cursor: pointer;
+            &:hover {
+            opacity: 0.5;
+        }
+    }
 `
 
 const ControlBtns = styled.div`
@@ -21,7 +29,7 @@ const ControlBtns = styled.div`
     column-gap: 10px;
 `
 
-const ArrowBtn = styled.button`
+export const ArrowBtn = styled.button`
     width: 25;
     height: 25;
     display: flex;
@@ -46,8 +54,8 @@ export const Title: React.FC<ITitleProps> = ({month, year}) => {
         <>
             <CalendarTitle>
                 <TitleEl>
-                    {month}
-                    <span style={{color: "#EF4444", fontWeight: 400}}> {year}</span>
+                    <span className="month">{month}</span>
+                    <span className="year" style={{color: "#EF4444", fontWeight: 400}}> {year}</span>
                 </TitleEl>
            
                 <ControlBtns >
