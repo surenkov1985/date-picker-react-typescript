@@ -1,13 +1,21 @@
 import React, {useEffect} from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Outlet, Routes, Route, NavLink } from "react-router-dom";
+import { Week } from "./pages/Week";
 
-export const Register:React.FC<any> = ({onClick}) => {
+export const Register:React.FC<any> = ({onClick, login}) => {
 
     const navigate = useNavigate()
 
-    // useEffect(() => {navigate("/week")}, [])
+    if (login) {
+        return (
+            <Week/>
+        )
+    }
 
     return (
-        <button onClick={onClick}>login</button>
+        <>
+            <button onClick={onClick}>login</button>
+        </>
     )
+
 }

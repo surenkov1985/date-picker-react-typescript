@@ -1,4 +1,4 @@
-import React, {useState} from "react"
+import React from "react"
 import styled from "styled-components"
 import { Calendar } from "./calendar"
 import { Title } from "./Title"
@@ -13,7 +13,6 @@ const Sidebar = styled.div`
     padding: 16px;
     row-gap: 16px;
 `
-
 export interface ICalendar {
     day: number,
     month: string[],
@@ -22,8 +21,6 @@ export interface ICalendar {
 }
 
 export const SideMenu = () => {
-
-    const [todayClassName, setTodayClassName] = useState("")
 
     const month:string[] = ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"]
     const calendarDays:ICalendar[] = []; 
@@ -37,22 +34,24 @@ export const SideMenu = () => {
     const lastWeekDay = new Date(fullYear, todayMonth + 1, 0).getDay()
 
     for (let i = 1; i <=lastDate; i++) {
-        // setTodayClassName(i === today?"today":"")
-        calendarDays.push({day:i, month: ["current", i === today?"today":""], id: "c" + i})
+
+        calendarDays.push({day:i, month: ["current", i === today ? "today" : ""], id: "c" + i})
     } 
 
     if (firstWeekDay !== 1) {
+
         for (let i = 0; i < firstWeekDay; i++) {
                
-            calendarDays.unshift({day: new Date(fullYear, todayMonth + 1, -i).getDate(), month: ["previous", todayClassName], id: "pr" + i})
+            calendarDays.unshift({day: new Date(fullYear, todayMonth + 1, -i).getDate(), month: ["previous"], id: "pr" + i})
         }
     }
     if (lastWeekDay !== 0) {
+
          for (let i = 1; i <= 7 - lastWeekDay; i++) {
+
             calendarDays.push({day:i, month: ["next"], id: "n" + i})
         }
     }
-    console.log(firstWeekDay, lastWeekDay);
 
     return (
         <Sidebar>

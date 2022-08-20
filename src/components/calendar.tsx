@@ -1,17 +1,13 @@
 import React from "react"
 import styled from "styled-components"
 import { ICalendar } from "./Sidebar"
+import { WeekDays } from "./WeekDays"
+
 
 const CalendarCont = styled.div`
     display: flex;
     flex-direction: column;
     row-gap: 10px;
-`
-
-const CalendarHeader = styled.ul`
-    display: grid;
-    grid-column-gap: 10px;
-    grid-template-columns: repeat(7, 30px);
 `
 const WeekDay = styled.li`
     font-weight: 600;
@@ -79,20 +75,18 @@ interface ICaalendarProps {
     dates: ICalendar[]
 }
 
+export interface IDays {
+    weekDay: string,
+    numb?: number
+}
+
 export const Calendar:React.FC<ICaalendarProps> = ({dates}) => {
 
-    const days:string[] = ["ПН", "ВТ", "СР", "ЧТ", "ПТ", "СБ", "ВС"]
-    const numbers:number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+    const days:IDays[] = [{weekDay: "ПН"}, {weekDay: "ВТ"}, {weekDay: "СР"}, {weekDay:"ЧТ"}, {weekDay:"ПТ"}, {weekDay:"СБ"}, {weekDay:"ВС"}]
 
     return (
         <CalendarCont>
-            <CalendarHeader>
-                {days.map((day, index) => {
-                    return (
-                        <WeekDay key={index}>{day}</WeekDay> 
-                    )
-                })}
-            </CalendarHeader>
+            <WeekDays days={days}/>
             <CalendarWrapper>
                 {dates.map((res) => {
                     return (

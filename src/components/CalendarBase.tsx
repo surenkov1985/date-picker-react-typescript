@@ -1,14 +1,15 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import {ArrowBtn} from "./Title"
-import {IoChevronBackOutline} from "react-icons/io5"
+import {IoChevronBackOutline, IoSearchOutline} from "react-icons/io5"
 import {IoChevronForwardOutline, } from "react-icons/io5"
-import { NavLink, Routes, Route, useNavigate } from "react-router-dom";
+import { NavLink, Routes, Route, useNavigate, Navigate } from "react-router-dom";
 import {Day} from "./pages/Day"
 import {Week} from "./pages/Week"
 import {Month} from "./pages/Month"
 import {Year} from "./pages/Year"
 import {Register} from "./register"
+
 
 const CalendarBaseCont = styled.div`
     width: 100%;
@@ -19,7 +20,7 @@ const CalendarBaseCont = styled.div`
     row-gap: 16px;
 `
 
-const BaseHead = styled.head`
+const BaseHead = styled.header`
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -73,19 +74,37 @@ const DayLink = styled(NavLink)`
     }
 `
 
-const BaseMain = styled.main``
+const BaseMain = styled.main`
+    overflow: hidden;
+`
+
+const Label = styled.label`
+    display: flex;
+    align-items: center;
+    background: #E5E5E5;
+    padding: 4px;
+    border-radius: 4px;
+    column-gap: 8px;
+`
+
+const Search = styled.input`
+    background: #E5E5E5;
+    font-weight: 400;
+    font-size: 12px;
+`
 
 const DayControl = styled.button`
     display: flex;
-    column-gap: 8px;`
+    column-gap: 8px;
+`
 
 export const CalendarBase = () => {
 
     const navigate = useNavigate()
+    const [login, setLogin] = useState(false)
 
-    // useEffect(() => {navigate("/week")}, [])
     function onButtonHandler() {
-        navigate("/week")
+        setLogin(!login)
     }
     
     return (
@@ -102,17 +121,23 @@ export const CalendarBase = () => {
                     <DayLink to="/month">Месяц</DayLink>
                     <DayLink to="/year">Год</DayLink>
                 </DayControl>
+                <Label>
+                    <IoSearchOutline style={{width: "20px", height: "20px", cursor: "pointer"}}/>
+                    <Search placeholder="Search"/>
+                </Label>
             </BaseHead>
             <BaseMain>
                 <Routes>
-                    <Route path="/" element={<Register onClick={onButtonHandler}/>}>
-                        <Route path="day" element={<Day/>}/>
-                        <Route path="week" element={<Week/>}/>
-                        <Route path="month" element={<Month/>}/>
-                        <Route path="year" element={<Year/>}/>
+                    <Route path="/" element={<Register login={login} onClick={onButtonHandler}/>}>
+                        <Route path="/day" element={<Day/>}/>
+                        <Route path="/week" element={<Week/>}/>
+                        <Route path="/month" element={<Month/>}/>
+                        <Route path="/year" element={<Year/>}/>
                     </Route>
                 </Routes>
+                
             </BaseMain>
+            
         </CalendarBaseCont>
     )
 }
