@@ -7,7 +7,34 @@ export const CalendarHeader = styled.ul`
     grid-column-gap: 10px;
     grid-template-columns: repeat(7, 30px);
 
-  
+    &.monthHeader {
+        grid-column-gap: 0;
+        grid-template-columns: repeat(7, 1fr);
+        box-shadow: inset -1px -1px 0px #E0E0E0;
+
+        & > li {
+            background: #FAFAFA;
+            min-height: 65px;
+            padding: 4px 8px 16px;
+            text-align: start;
+            display: flex;
+            flex-direction: column;
+            row-gap: 8px;
+            margin-left: 0;
+            cursor: pointer;
+             
+            &:not(:last-child) {
+                border-right: 1px solid #E0E0E0;
+                // border-bottom: 1px solid #E0E0E0;
+            }
+            &:last-child {
+                border-bottom: 1px solid #E0E0E0;
+            }
+            &:hover {
+                background: #EFF6FF;
+            }
+        }
+    }
 
     &.baseHeader {
         grid-column-gap: 0;
@@ -24,7 +51,7 @@ export const WeekDay = styled.li`
 
     &.baseWeekDays {
         background: #FAFAFA;
-        // box-shadow: inset -1px -1px 0px #E0E0E0;
+        min-height: 65px;
         padding: 4px 8px 16px;
         text-align: start;
         display: flex;
@@ -39,6 +66,9 @@ export const WeekDay = styled.li`
         &:last-child {
             border-bottom: 1px solid #E0E0E0;
         }
+        & > li:hover {
+        background: #EFF6FF;
+    }
     }
 `
 const DayNumb = styled.span`
@@ -56,7 +86,9 @@ interface IWeekDaysProps {
 export const WeekDays:React.FC<IWeekDaysProps> = ({className, childClassName, days}) => {
 
     return  (<CalendarHeader className={className}>
-                {className && <WeekDay className={childClassName}/>}
+                {childClassName && 
+                    <WeekDay className={childClassName}/>
+                }
                 {days.map((day, index) => {
                     return (
                         <WeekDay className={childClassName} key={index}>

@@ -7,12 +7,18 @@ const Hours = styled.ul`
     display: flex;
     flex-direction: column;
 
+    &:hover > li {
+        background: #EFF6FF;
+    }
+
     &:not(:last-child) {
         border-right: 1px solid #E0E0E0
     }
+
 `
 const Hour = styled(WeekDay)`
     height: 72px;
+    cursor: pointer;
 
     &:not(:last-child) {
         border-right: none!important;
@@ -20,10 +26,16 @@ const Hour = styled(WeekDay)`
     }
 
     &:last-child {border-bottom: none!important;}
+
 `
 const WeekHead = styled(WeekDays)`
     position: sticky;
     top: 0;
+    cursor: pointer;
+
+    & > li:hover {
+        background: #EFF6FF;
+    }
 `
 
 const WeekContent = styled.div`
@@ -37,9 +49,7 @@ export const Week = () => {
     const days:IDays[] = [{weekDay: "ПН"}, {weekDay: "ВТ"}, {weekDay: "СР"}, {weekDay:"ЧТ"}, {weekDay:"ПТ"}, {weekDay:"СБ"}, {weekDay:"ВС"}]
     const [weekDays, setWeekDays] = useState(days)
 
-    const times:string[] = ["00:00", "01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00", "08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00"]
     const [hours, setHours] = useState<string[]>([])
-    // const hours:string[] = []
 
     let date = new Date()
     let year = date.getFullYear()
@@ -58,10 +68,9 @@ export const Week = () => {
 
         setHours(arr)
     }
-    // let firstDay = date.getDate() - date.getDay()
 
     useEffect(() => {
-        let firstDay = date.getDate() - date.getDay()
+        let firstDay = date.getDate() - (date.getDay() === 0 ? 7 : date.getDay())
         days.map(day => {
             firstDay += 1
             return day.numb = firstDay
@@ -73,7 +82,6 @@ export const Week = () => {
     useEffect(() => {
         
         getHours()
-        console.log(hours)
     }, [])
 
     return (
@@ -89,10 +97,10 @@ export const Week = () => {
                 </Hours>
                 {days.map(res => {
                     return (
-                        <Hours key={res.weekDay}>
-                            {hours.map((hour , index) => {
+                        <Hours key={res.weekDay} >
+                            {hours.map((hour) => {
                                 return (
-                                    <Hour key={res.weekDay + hour} className="baseWeekDays"></Hour>
+                                    <Hour key={res.weekDay + hour} className="baseWeekDays" ></Hour>
                                 )
                             })}
                         </Hours>
@@ -102,3 +110,24 @@ export const Week = () => {
         </WeekContent>
     )
 }
+
+ {/* <CalendarHeader className="baseHeader">
+                <Hours>
+                    {hours.map((res) => {
+                        return (
+                            <Hour key={res} className="baseWeekDays">{res}</Hour>
+                        )
+                    })}
+                </Hours>
+                {days.map(res => {
+                    return (
+                        <Hours key={res.weekDay}>
+                            {hours.map((hour) => {
+                                return (
+                                    <Hour key={res.weekDay + hour} className="baseWeekDays"></Hour>
+                                )
+                            })}
+                        </Hours>
+                    )
+                })}
+            </CalendarHeader> */}

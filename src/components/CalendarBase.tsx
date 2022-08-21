@@ -3,12 +3,13 @@ import styled from "styled-components";
 import {ArrowBtn} from "./Title"
 import {IoChevronBackOutline, IoSearchOutline} from "react-icons/io5"
 import {IoChevronForwardOutline, } from "react-icons/io5"
-import { NavLink, Routes, Route, useNavigate, Navigate } from "react-router-dom";
+import { NavLink, Routes, Route, useNavigate, Navigate, Outlet } from "react-router-dom";
 import {Day} from "./pages/Day"
 import {Week} from "./pages/Week"
 import {Month} from "./pages/Month"
 import {Year} from "./pages/Year"
 import {Register} from "./register"
+import { SideMenu } from './Sidebar';
 
 
 const CalendarBaseCont = styled.div`
@@ -16,7 +17,7 @@ const CalendarBaseCont = styled.div`
     height: 100%;
     display: flex;
     flex-direction: column;
-    padding: 16px;
+    padding: 16px 16px 0;
     row-gap: 16px;
 `
 
@@ -76,6 +77,9 @@ const DayLink = styled(NavLink)`
 
 const BaseMain = styled.main`
     overflow: hidden;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
 `
 
 const Label = styled.label`
@@ -99,45 +103,35 @@ const DayControl = styled.button`
 `
 
 export const CalendarBase = () => {
-
-    const navigate = useNavigate()
-    const [login, setLogin] = useState(false)
-
-    function onButtonHandler() {
-        setLogin(!login)
-    }
     
     return (
-        <CalendarBaseCont>
-            <BaseHead>
-                <DateControl>
-                    <ArrowBaseLeft><IoChevronBackOutline size={20} /></ArrowBaseLeft>
-                    <ArrowBaseText>Сегодня</ArrowBaseText>
-                    <ArrowBaseRight><IoChevronForwardOutline size={20} /></ArrowBaseRight>
-                </DateControl>
-                <DayControl>
-                    <DayLink to="/day">День</DayLink>
-                    <DayLink to="/week">Неделя</DayLink>
-                    <DayLink to="/month">Месяц</DayLink>
-                    <DayLink to="/year">Год</DayLink>
-                </DayControl>
-                <Label>
-                    <IoSearchOutline style={{width: "20px", height: "20px", cursor: "pointer"}}/>
-                    <Search placeholder="Search"/>
-                </Label>
-            </BaseHead>
-            <BaseMain>
-                <Routes>
-                    <Route path="/" element={<Register login={login} onClick={onButtonHandler}/>}>
-                        <Route path="/day" element={<Day/>}/>
-                        <Route path="/week" element={<Week/>}/>
-                        <Route path="/month" element={<Month/>}/>
-                        <Route path="/year" element={<Year/>}/>
-                    </Route>
-                </Routes>
+        
+        <>
+            <SideMenu/>
+            <CalendarBaseCont>
+                <BaseHead>
+                    <DateControl>
+                        <ArrowBaseLeft><IoChevronBackOutline size={20} /></ArrowBaseLeft>
+                        <ArrowBaseText>Сегодня</ArrowBaseText>
+                        <ArrowBaseRight><IoChevronForwardOutline size={20} /></ArrowBaseRight>
+                    </DateControl>
+                    <DayControl>
+                        <DayLink to="/day">День</DayLink>
+                        <DayLink to="/week">Неделя</DayLink>
+                        <DayLink to="/month">Месяц</DayLink>
+                        <DayLink to="/year">Год</DayLink>
+                    </DayControl>
+                    <Label>
+                        <IoSearchOutline style={{width: "20px", height: "20px", cursor: "pointer"}}/>
+                        <Search placeholder="Search"/>
+                    </Label>
+                </BaseHead>
+                <BaseMain>
+                    
+                    <Outlet/>
+                </BaseMain>
                 
-            </BaseMain>
-            
-        </CalendarBaseCont>
+            </CalendarBaseCont>
+        </>
     )
 }

@@ -1,5 +1,6 @@
 import React from "react"
 import styled from "styled-components"
+import { CalendarBody } from "./CalendarBody"
 import { ICalendar } from "./Sidebar"
 import { WeekDays } from "./WeekDays"
 
@@ -87,20 +88,7 @@ export const Calendar:React.FC<ICaalendarProps> = ({dates}) => {
     return (
         <CalendarCont>
             <WeekDays days={days}/>
-            <CalendarWrapper>
-                {dates.map((res) => {
-                    return (
-                        <Date key={res.id} className={res.month.join(" ")}>
-                            {res.day}
-                            <Tasks>
-                                <Task color="blue"></Task>
-                                <Task color="violet"></Task>
-                                <Task color="pink"></Task>
-                            </Tasks>
-                        
-                        </Date>)
-                })}
-            </CalendarWrapper>
+            <CalendarBody dates={dates}/>
         </CalendarCont>
     )
 }

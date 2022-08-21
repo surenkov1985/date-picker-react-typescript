@@ -16,7 +16,8 @@ const Sidebar = styled.div`
 export interface ICalendar {
     day: number,
     month: string[],
-    id: string
+    id: string,
+    fullMonth?: string | null
 
 }
 
